@@ -82,7 +82,6 @@ export default class ProductDetails extends Component {
         productResponse.then((response) => {
             let productData = response;
             this.setState({ productList: productData })
-            console.log("productList", this.state.productList)
         }, function (error) {
             CustomToastr.error(error)
         })
@@ -97,7 +96,6 @@ export default class ProductDetails extends Component {
         productResponse.then((response) => {
             let productInfo = response;
             this.setState({ productDescription: productInfo })
-            console.log("product info", response)
         }, function (error) {
             CustomToastr.error(error)
         })
@@ -113,8 +111,6 @@ export default class ProductDetails extends Component {
             this.getImageCount();
             const imageCollection = response;
             this.setState({ allImageList: imageCollection })
-            console.log("allImageList", this.state.allImageList)
-
         }, function (error) {
             CustomToastr.error("Unable to fetch Image List" || error)
         })
@@ -134,7 +130,6 @@ export default class ProductDetails extends Component {
                 return result;
             })
             this.setState({ productImages: newProductImage })
-            console.log("new product image", this.state.productImages)
         }, function (error) {
             CustomToastr.error("Unable to fetch Product Images" || error)
         })
