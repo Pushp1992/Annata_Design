@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Container, Card, CardHeader, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
+import { Row, Col, Container, Card, CardHeader, CardFooter, CardBody, Jumbotron, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 import Select, { Option } from 'rc-select';
 import ImageGallery from 'react-image-gallery';
 
@@ -28,7 +28,8 @@ const defaultState = {
     imageCounts: 0,
     productImages: [],
     productName: "Select your product",
-    productList: []
+    productList: [],
+    productDescription: {}
 }
 
 export default class ProductDetails extends Component {
@@ -38,6 +39,15 @@ export default class ProductDetails extends Component {
 
         this.state = defaultState;
         this.handleChange = this.handleChange.bind(this);
+        this.addToCart = this.addToCart.bind(this);
+    }
+
+    /**
+     * Add product to cart
+     */
+    addToCart(event) {
+        event.preventDefault();
+        CustomToastr.warning("Currently we are not using this service!")
     }
 
     /**
@@ -82,6 +92,8 @@ export default class ProductDetails extends Component {
     getProductInformation = (productId) => {
         let productResponse = CatalougeService.getProductInformation(productId)
         productResponse.then((response) => {
+            let productInfo = response;
+            this.setState({ productDescription: productInfo })
             console.log("product info", response)
         }, function (error) {
             CustomToastr.error(error)
@@ -148,6 +160,7 @@ export default class ProductDetails extends Component {
 
         const images = this.state.productImages;
         const demoImage = DemoImageCarousel;
+        const productDesc = this.state.productDescription;
 
         return (
             <Container fluid={true}>
@@ -160,9 +173,7 @@ export default class ProductDetails extends Component {
                                         this.state.productList.map(function (product, key) {
                                             return (
                                                 <Option key={key} text={product.name} value={product.id}>
-
                                                     {product.name} - {product.id}
-
                                                 </Option>
                                             )
                                         })
@@ -172,35 +183,86 @@ export default class ProductDetails extends Component {
                         </Row>
                         <br /> <br />
                         <Row noGutters={true}>
-                            <Col md={{ size: 8 }}>
 
-                                <Card body outline color="success">
-                                    <CardTitle>Special Title Treatment</CardTitle>
-                                    <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
-                                    <Button color="secondary">Button</Button>
-                                </Card>
+                            {
+                                (images.length !== 0) ?
+                                    <Col md={{ size: 8 }}>
 
-                                <br/> <br />
+                                        <Card outline id="productDescCard">
+                                            <Row noGutters={true}>
+                                                <Col md={{ size: 6 }}>
+                                                    <label className="productNamePrice">{productDesc.name}</label>
+                                                </Col>
+                                                <Col md={{ size: 6 }}>
+                                                    <label className="productNamePrice">${productDesc.price}</label>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md={{ size: 6 }}>
+                                                    <div>
+                                                        Color: {productDesc.color} {" "}
+                                                        <i class="fa fa-square-o" aria-hidden="true" style={{ backgroundColor: `${productDesc.color}`, outlineColor: "black" }}></i>
+                                                    </div>
+                                                </Col>
+                                                <Col md={{ size: 6 }} className="rating">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md={{ size: 10, offset: 1 }}>
+                                                    <br />
+                                                    <label id="productDescription">{productDesc.description}</label>
+                                                </Col>
+                                            </Row>
+                                        </Card>
 
-                                <Card outline color="success">
-                                    <CardHeader>
-                                        <Button outline color="primary" size="lg" id="btnMen">
-                                            <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
-                                        <Button outline color="info" size="lg" id="btnWomen">
-                                            <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
-                                    </CardHeader>
-                                    <CardBody>
-                                        <CardText>
-                                            <div>
-                                                <div> <ColorRadioButton /></div>
-                                                <div> <SizeRadioButton /></div>
-                                            </div>
-                                        </CardText>
-                                    </CardBody>
-                                    <Button color="success">Add to BAG</Button>
-                                </Card>
+                                        <br /> <br />
 
-                            </Col>
+                                        <Card outline color="success">
+                                            <CardHeader>
+                                                <Button outline color="primary" size="lg" id="btnMen">
+                                                    <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
+                                                <Button outline color="info" size="lg" id="btnWomen">
+                                                    <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
+                                            </CardHeader>
+                                            <CardBody>
+                                                <CardText>
+                                                    <div>
+                                                        <div> <ColorRadioButton /></div>
+                                                        <div> <SizeRadioButton /></div>
+                                                    </div>
+                                                </CardText>
+                                            </CardBody>
+                                            <Button color="success" onClick={this.addToCart}>Add to BAG</Button>
+                                        </Card>
+
+                                    </Col>
+                                    :
+                                    <Col md={{ size: 8 }}>
+                                        <Card outline color="warning">
+                                            <CardHeader></CardHeader>
+                                            <CardText>
+                                                <div>
+                                                    <Jumbotron fluid>
+                                                        <Container fluid>
+                                                            <h1 className="display-3">
+                                                                No Product Selected Yet {" "}
+                                                                <i class="fa fa-frown-o" aria-hidden="true"></i>
+                                                            </h1>
+                                                            <p className="lead">Please select Product from above select box to get it's Description and Price.</p>
+                                                        </Container>
+                                                    </Jumbotron>
+                                                </div>
+                                            </CardText>
+                                            <CardFooter></CardFooter>
+                                        </Card>
+
+                                    </Col>
+                            }
                         </Row>
 
                     </Col>

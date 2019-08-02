@@ -7,6 +7,7 @@ import '../Utils/radioButtonGroup.css';
 function ColorRadioButton() {
     return (
         <div>
+            <i class="fa fa-font-awesome fa-1x" aria-hidden="true"></i> {" "} 
             <Label for="select_color">Select Color</Label>
             <Form className="btnStyle">
                 <button type="button" id="blue" />
@@ -29,6 +30,7 @@ function ColorRadioButton() {
 function SizeRadioButton() {
     return (
         <div>
+            <i class="fa fa-hand-paper-o fa-1x" aria-hidden="true"></i> {" "}
             <Label for="select_color">Select Size</Label>
             <Form className="btnStyle">
                 <button type="button" id="blu">05</button>
