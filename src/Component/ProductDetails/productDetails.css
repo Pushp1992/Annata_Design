@@ -1,3 +1,11 @@
 #productItem {
     display: block;
 }
+
+#btnWomen {
+    width: 150px;
+}
+
+#btnMen {
+    width: 150px;
+}

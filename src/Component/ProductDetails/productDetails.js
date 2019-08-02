@@ -2,13 +2,15 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Container, Card, CardHeader, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { Row, Col, Container, Card, CardHeader, CardBody, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 import Select, { Option } from 'rc-select';
 import ImageGallery from 'react-image-gallery';
 
 // Custom Import
 import CustomToastr from '../Utils/customToastr';
 import CatalougeService from '../Utils/CatalougeService';
+import DemoImageCarousel from '../Utils/demoImageCarousel';
+import { ColorRadioButton, SizeRadioButton } from '../Utils/radioButtonGroup';
 
 // Custom Style
 import '../ProductDetails/productDetails.css';
@@ -35,14 +37,7 @@ export default class ProductDetails extends Component {
         super(props)
 
         this.state = defaultState;
-        this.showAlert = this.showAlert.bind(this);
         this.handleChange = this.handleChange.bind(this);
-    }
-
-    showAlert(event) {
-        event.preventDefault()
-
-        window.alert("alert");
     }
 
     /**
@@ -62,6 +57,7 @@ export default class ProductDetails extends Component {
         }
         this.setState({ productName: selectedProduct })
         this.productImageList(productID);
+        this.getProductInformation(productID);
     }
 
     /**
@@ -80,6 +76,19 @@ export default class ProductDetails extends Component {
     }
 
     /**
+    * Fetch Product Description by productId
+    */
+
+    getProductInformation = (productId) => {
+        let productResponse = CatalougeService.getProductInformation(productId)
+        productResponse.then((response) => {
+            console.log("product info", response)
+        }, function (error) {
+            CustomToastr.error(error)
+        })
+    }
+
+    /**
     * Fetch all product image
     */
 
@@ -88,16 +97,7 @@ export default class ProductDetails extends Component {
         imageList.then((response) => {
             CustomToastr.error("my error ewrwe ")
             this.getImageCount();
-
             const imageCollection = response;
-            // imageCollection.forEach(data => {
-            //     let image = {
-            //         imageUrl: data.url,
-            //         imageId: data.id,
-            //         productId: data.productId
-            //     }
-            //     this.setState({ productImageList: image })
-            // });
             this.setState({ productImageList: imageCollection })
             console.log(this.state.productImageList)
 
@@ -142,38 +142,75 @@ export default class ProductDetails extends Component {
 
     componentDidMount() {
         this.getProductList();
-        // this.getImageList();
     }
 
     render() {
 
         const images = this.state.productImages;
+        const demoImage = DemoImageCarousel;
 
         return (
             <Container fluid={true}>
-                <Row>
-                    <Col md={{ size: 2 }}>
-                        <Select name="productName" id="productItem" bsSize="sm" value={this.state.productName} onChange={this.handleChange} dropdownMenuStyle={{ maxHeight: 500 }} optionLabelProp="children" optionFilterProp="text" backfill required>
-                            {
-                                this.state.productList.map(function (product, key) {
-                                    return (
-                                        <Option key={key} text={product.name} value={product.id}>
-                                          
-                                               {product.name} - {product.id}
-                                           
-                                        </Option>
-                                    )
-                                })
-                            }
-                        </Select>
-                    </Col>
-                    <Col md={{ size: 3 }}>
-                        <div>
-                            <h4> product details will appear here </h4>
-                        </div>
+                <Row noGutters={true}>
+                    <Col md={{ size: 6 }}>
+                        <Row noGutters={true}>
+                            <Col md={{ size: 4 }}>
+                                <Select name="productName" id="productItem" bsSize="sm" value={this.state.productName} onChange={this.handleChange} dropdownMenuStyle={{ maxHeight: 500 }} optionLabelProp="children" optionFilterProp="text" backfill required>
+                                    {
+                                        this.state.productList.map(function (product, key) {
+                                            return (
+                                                <Option key={key} text={product.name} value={product.id}>
+
+                                                    {product.name} - {product.id}
+
+                                                </Option>
+                                            )
+                                        })
+                                    }
+                                </Select>
+                            </Col>
+                        </Row>
+                        <br /> <br />
+                        <Row noGutters={true}>
+                            <Col md={{ size: 8 }}>
+
+                                <Card body outline color="success">
+                                    <CardTitle>Special Title Treatment</CardTitle>
+                                    <CardText>With supporting text below as a natural lead-in to additional content.</CardText>
+                                    <Button color="secondary">Button</Button>
+                                </Card>
+
+                                <br/> <br />
+
+                                <Card outline color="success">
+                                    <CardHeader>
+                                        <Button outline color="primary" size="lg" id="btnMen">
+                                            <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
+                                        <Button outline color="info" size="lg" id="btnWomen">
+                                            <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
+                                    </CardHeader>
+                                    <CardBody>
+                                        <CardText>
+                                            <div>
+                                                <div> <ColorRadioButton /></div>
+                                                <div> <SizeRadioButton /></div>
+                                            </div>
+                                        </CardText>
+                                    </CardBody>
+                                    <Button color="success">Add to BAG</Button>
+                                </Card>
+
+                            </Col>
+                        </Row>
+
                     </Col>
                     <Col md={{ size: 4 }}>
-                        <ImageGallery items={images} onThumbnailClick={this.showAlert} />
+                        {
+                            (images.length !== 0) ?
+                                <ImageGallery items={images} />
+                                :
+                                <ImageGallery items={demoImage} />
+                        }
                     </Col>
                 </Row>
                 {/* {

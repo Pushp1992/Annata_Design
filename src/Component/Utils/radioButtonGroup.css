@@ -1,0 +1,171 @@
+/* FormGroup > Label {
+    background-color: red;
+} */
+
+.btnStyle>* {
+    margin-right: 30px;
+    display: inline-block;
+}
+
+#green {
+    color: green;
+    background-color: red;
+}
+
+.radioinput {
+    color: yellow;
+    background-color: red;
+
+}
+
+input[type="radio"] {
+    color: yellow;
+    background-color: red;
+}
+
+input {
+    color: yellow;
+    background-color: yellow;
+}
+
+ /* 
+ *Radio Button color style 
+ */
+
+#blue {
+  padding: 15px;  
+  margin: 5px;
+  border: 1px solid red;
+  border-radius: 30px;
+  background-color: blue;    
+}
+#green {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: #24b47a;    
+  }
+  #orange {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color:orange;    
+  }
+  #red {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: red;    
+  }
+  #brown {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color:brown;    
+  }
+  #pink {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: pink;    
+  }
+  #lime {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: lime;    
+  }
+  #grey {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: grey;    
+  }
+  #white {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: white;    
+  }
+  #black {
+    padding: 15px;  
+    margin: 5px;
+    border: 1px solid red;
+    border-radius: 30px;
+    background-color: black;    
+  }
+
+  /* 
+ * Radio Button Size style 
+ */
+
+#blu {
+    padding: 6px;  
+    margin: 5px;
+    border: 1px solid black;
+    background-color: whitesmoke;
+  }
+  #gree {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke;  
+    }
+    #orang {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: white;   
+    }
+    #re {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke; 
+    }
+    #brow {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke;  
+    }
+    #pin {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: white;  
+    }
+    #lim {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke;  
+    }
+    #gre {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke;  
+    }
+    #whit {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: white;   
+    }
+    #blac {
+      padding: 6px;  
+      margin: 5px;
+      border: 1px solid black;
+      background-color: whitesmoke;   
+    }
+
+

@@ -20,7 +20,6 @@ export default class HomePage extends Component {
 
                 <ProductDetails />
 
-                <h3> This is Homepage of the application</h3>
 
                 <br/><br/><br/><br/>
 
