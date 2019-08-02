@@ -20,6 +20,22 @@ const CatalougeService = {
             })
     },
 
+    getProductImageList(productID) {
+        const encodedURI = window.encodeURI("/proxy/api/products/"+productID+"/image?access_token=" + access_token)
+
+        return axios({
+            "method": "GET",
+            "url": encodedURI,
+            "headers": {
+                "Content-Type": "application/json",
+                "Server": "CATALOUGE"
+            }
+        })
+            .then(function (response) {
+                return response.data
+            })
+    },
+
     getImageList() {
         const encodedURI = window.encodeURI("/proxy/api/images/" + "?access_token=" + access_token)
 
