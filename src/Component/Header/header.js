@@ -60,7 +60,9 @@ export default class Header extends Component {
             <Router>
                 <Container fluid={true}>
                     <Row style={{ backgroundColor: 'black' }}>
-                        <Col md={{ size: 9 }}><img src={logo} alt={logo} className="innerLogo" /></Col>
+                        <Col md={{ size: 9 }}>
+                            {/* <img src={logo} alt={logo} className="innerLogo" /> */}
+                        </Col>
                         <Col md={{ size: 1, offset: 1}} className="about-us"> ABOUT </Col>
                         <Col md={{ size: 1 }}>
                             <div style={{ textAlign: 'right' }}>

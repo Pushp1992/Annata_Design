@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Row, Col, Container, Card, CardHeader, CardFooter, CardBody, Jumbotron, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
 import Select, { Option } from 'rc-select';
 import ImageGallery from 'react-image-gallery';
+import ItemsCarousel from 'react-items-carousel';
+import range from 'lodash/range';
 
 // Custom Import
 import CustomToastr from '../Utils/customToastr';
@@ -29,7 +31,8 @@ const defaultState = {
     productImages: [],
     productName: "Select your product",
     productList: [],
-    productDescription: {}
+    productDescription: {},
+    allImageList: []
 }
 
 export default class ProductDetails extends Component {
@@ -107,11 +110,10 @@ export default class ProductDetails extends Component {
     getImageList = () => {
         let imageList = CatalougeService.getImageList()
         imageList.then((response) => {
-            CustomToastr.error("my error ewrwe ")
             this.getImageCount();
             const imageCollection = response;
-            this.setState({ productImageList: imageCollection })
-            console.log(this.state.productImageList)
+            this.setState({ allImageList: imageCollection })
+            console.log("allImageList", this.state.allImageList)
 
         }, function (error) {
             CustomToastr.error("Unable to fetch Image List" || error)
@@ -154,6 +156,7 @@ export default class ProductDetails extends Component {
 
     componentDidMount() {
         this.getProductList();
+        this.getImageList();
     }
 
     render() {
@@ -277,13 +280,43 @@ export default class ProductDetails extends Component {
                 </Row>
 
                 {/***************** PRODUCT RECOMMENDATION SECTION ****************/}
-                <br/><br/><br/><br/>
-                
-                <Row>
-                    <Col md={{size: 12}}>
-                        RECOMMENDATION
-                    </Col>
-                </Row>
+                <br /><br /><br /><br />
+
+                <Container fluid={true}>
+                    <Row>
+                        <Card id="recommend-section-style">
+                            <CardHeader> <label id="recHeader">
+                                You'll Also Like  {" "} <i class="fa fa-heart" aria-hidden="true"></i>
+                            </label></CardHeader>
+                            <Col md={{ size: 12 }}>
+                                <div style={{ "padding": "0 60px", "maxWidth": 1000, "margin": "0 auto" }}>
+                                    <ItemsCarousel
+                                        placeholderItem={<div style={{ height: 300, background: '#EEE' }} />}
+                                        enablePlaceholder={true}
+                                        numberOfPlaceholderItems={6}
+                                        numberOfCars={6}
+                                        gutter={12}
+                                        slidesToScroll={2}
+                                        chevronWidth={60}
+                                        outsideChevron={true}
+                                        showSlither={false}
+                                        firstAndLastGutter={false}
+                                        activeItemIndex={this.state.activeItemIndex}
+                                        requestToChangeActive={value => this.setState({ activeItemIndex: value })}
+                                        rightChevron={<i class="fa fa-hand-o-right fa-2x" aria-hidden="true"></i>}
+                                        leftChevron={<i class="fa fa-hand-o-left fa-2x" aria-hidden="true"></i>}
+                                    >
+                                        {this.state.allImageList.map((data, key) =>
+                                            <div key={key} style={{ height: 200 }}>
+                                                <img src={data.url} alt="image" style={{ width: "200px", height: "200px" }} />
+                                            </div>
+                                        )}
+                                    </ItemsCarousel>
+                                </div>
+                            </Col>
+                        </Card>
+                    </Row>
+                </Container>
 
             </Container>
         )

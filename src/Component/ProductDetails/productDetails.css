@@ -26,3 +26,15 @@
 #productDescCard {
     background-color: rgba(255, 255, 255, 0.151);
 }
+#recommend-section-style {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+#recHeader {
+    font-weight: 600;
+    font-size: 2em;
+    color: rgba(0, 0, 0, 0.74);
+    font-family: cursive;
+}
