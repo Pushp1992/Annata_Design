@@ -275,14 +275,15 @@ export default class ProductDetails extends Component {
                         }
                     </Col>
                 </Row>
-                {/* {
-                    this.state.productImageList.map(data => {
-                        return (
-                            data.id
-                        )
-                    })
-                } */}
 
+                {/***************** PRODUCT RECOMMENDATION SECTION ****************/}
+                <br/><br/><br/><br/>
+                
+                <Row>
+                    <Col md={{size: 12}}>
+                        RECOMMENDATION
+                    </Col>
+                </Row>
 
             </Container>
         )

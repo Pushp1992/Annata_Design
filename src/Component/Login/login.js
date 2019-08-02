@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import 'firebase/auth';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Container, Row, Col, Card, CardHeader, CardBody, CardTitle, CardText, Button } from 'reactstrap';
-import logo from '../../Asssts/anatta-logo.png';
+import logo from '../../Asssts/anatta-logo-1.png';
 
 // Custom Style
 import '../Login/login.css';
@@ -34,7 +34,7 @@ export default class Login extends Component {
                         <Card>
                             <CardHeader tag="h5">
                                 <span> <img id="logo" src={logo} alt={"logo"} /> </span>
-                                <label id="org-name">Anatta E-commerce</label>
+                                {/* <label id="org-name">Anatta E-commerce</label> */}
                             </CardHeader>
                             <CardBody>
                                 <CardTitle>
