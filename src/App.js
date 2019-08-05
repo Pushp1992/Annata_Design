@@ -31,7 +31,7 @@ class App extends Component {
       this.setState({ loading: false })
       if (user) {
         if (user.email) {
-          if (user.email.includes('@gmail.com', '@anattadesign.com')) {
+          if (user.email.includes('@gmail.com')) {
             setlocalKey('token', user.uid);
             setlocalKey('user', user.email);
             this.setState({
@@ -41,7 +41,7 @@ class App extends Component {
           } else {
             (() => firebase.auth().signOut())()
               .then(window.location.reload())
-              .then(window.alert(`You are trying to login using ${user.email} \n Please use Swiggy Email to Signin !`))
+              .then(window.alert(`You are trying to login using ${user.email} \n Please use Gmail to Signin !`))
           }
         }
       }

@@ -32,7 +32,8 @@ const defaultState = {
     productName: "Select your product",
     productList: [],
     productDescription: {},
-    allImageList: []
+    allImageList: [],
+    loader: false
 }
 
 export default class ProductDetails extends Component {
@@ -78,12 +79,15 @@ export default class ProductDetails extends Component {
      */
 
     getProductList = () => {
+        this.setState({loader: true})
         let productResponse = CatalougeService.getProductList()
         productResponse.then((response) => {
             let productData = response;
+            this.setState({loader: false})
             this.setState({ productList: productData })
         }, function (error) {
-            CustomToastr.error(error)
+            CustomToastr.error(error);
+            this.setState({loader: false})
         })
     }
 
@@ -159,6 +163,8 @@ export default class ProductDetails extends Component {
         const images = this.state.productImages;
         const demoImage = DemoImageCarousel;
         const productDesc = this.state.productDescription;
+        const loaderValue = this.state.loader;
+        const itemLoader = "Loading Items";
 
         return (
             <Container fluid={true}>
@@ -171,7 +177,9 @@ export default class ProductDetails extends Component {
                                         this.state.productList.map(function (product, key) {
                                             return (
                                                 <Option key={key} text={product.name} value={product.id}>
-                                                    {product.name}
+                                                   {loaderValue === "true" ? `${itemLoader}` : 
+                                                   `${product.name}`
+                                            }
                                                 </Option>
                                             )
                                         })
