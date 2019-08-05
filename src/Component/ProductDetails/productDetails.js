@@ -171,7 +171,7 @@ export default class ProductDetails extends Component {
                                         this.state.productList.map(function (product, key) {
                                             return (
                                                 <Option key={key} text={product.name} value={product.id}>
-                                                    {product.name} - {product.id}
+                                                    {product.name}
                                                 </Option>
                                             )
                                         })
