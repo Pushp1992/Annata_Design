@@ -79,15 +79,16 @@ export default class ProductDetails extends Component {
      */
 
     getProductList = () => {
-        this.setState({loader: true})
+        var self = this;
+        self.setState({ loader: true })
         let productResponse = CatalougeService.getProductList()
         productResponse.then((response) => {
             let productData = response;
-            this.setState({loader: false})
-            this.setState({ productList: productData })
+            self.setState({ loader: false })
+            self.setState({ productList: productData })
         }, function (error) {
+            self.setState({ loader: false })
             CustomToastr.error(error);
-            this.setState({loader: false})
         })
     }
 
@@ -177,9 +178,9 @@ export default class ProductDetails extends Component {
                                         this.state.productList.map(function (product, key) {
                                             return (
                                                 <Option key={key} text={product.name} value={product.id}>
-                                                   {loaderValue === "true" ? `${itemLoader}` : 
-                                                   `${product.name}`
-                                            }
+                                                    {loaderValue === "true" ? `${itemLoader}` :
+                                                        `${product.name}`
+                                                    }
                                                 </Option>
                                             )
                                         })
