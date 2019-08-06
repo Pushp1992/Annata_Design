@@ -23,7 +23,7 @@ class App extends Component {
 
   state = {
     isSignedIn: false,
-    loading: false
+    loading: true
   }
 
   componentDidMount = () => {
@@ -53,9 +53,14 @@ class App extends Component {
     if (this.state.loading === true) {
       return (
         <div style={{ textAlign: "center", position: "absolute", top: "40%", left: "45%" }}>
-          <Spinner type="grow" color="primary" />
-          <h2><i>Loading ...</i></h2>
-          <i className="fa fa-spinner fa-pulse fa-5x" aria-hidden="true"></i>
+          <Spinner type="grow" color="primary" /> {" "}
+          <Spinner type="grow" color="secondary" /> {" "}
+          <Spinner type="grow" color="success" /> {" "}
+          <Spinner type="grow" color="danger" /> {" "}
+          <Spinner type="grow" color="warning" /> {" "}
+          <Spinner type="grow" color="info" /> {" "}
+          <Spinner type="grow" color="light" /> {" "}
+          <Spinner type="grow" color="dark" />
         </div>
       )
     }
