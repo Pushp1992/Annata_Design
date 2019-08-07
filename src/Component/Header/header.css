@@ -29,8 +29,34 @@
     /* font: 13px/27px Roboto,RobotoDraft,Arial,sans-serif; */
 }
 
-.about-us {
-    color: white;
+.header-item {
+    color: black;
     margin-top: 20px;
 }
 
+#horzontal-line {
+    background-color: rgba(245, 245, 245, 0.692);
+}
+
+.align-circle {
+    margin-left: 240px;
+}
+
+#red-circle {
+    color: red;
+    position: relative;
+}
+
+#green-circle {
+    color: green;
+    position: relative;
+    right: 20px;
+}
+
+/*
+* Internal component style
+*/
+#ProfilePopover {
+    color: blue;
+    border-color:white;
+}

@@ -14,7 +14,7 @@ import logo from '../../Asssts/anatta-logo.png';
 Container.propTypes = {
     fluid: PropTypes.bool
 }
-    Row.propTypes = {
+Row.propTypes = {
     noGutters: PropTypes.bool
 }
 
@@ -40,13 +40,13 @@ export default class Header extends Component {
         event.preventDefault();
 
         firebase.auth().signOut()
-        .then(function() {
-            CustomToastr.success("Logout Successful !");
-            window.location.reload()
-            // this.props.history.push('/signin');
-        }).catch(function (error) {
-            CustomToastr.error(error || "Error occured while logging off. Please try again !");
-        });
+            .then(function () {
+                CustomToastr.success("Logout Successful !");
+                window.location.reload()
+                // this.props.history.push('/signin');
+            }).catch(function (error) {
+                CustomToastr.error(error || "Error occured while logging off. Please try again !");
+            });
     }
 
     render() {
@@ -59,11 +59,26 @@ export default class Header extends Component {
         return (
             <Router>
                 <Container fluid={true}>
-                    <Row style={{ backgroundColor: 'black' }}>
-                        <Col md={{ size: 9 }}>
-                            {/* <img src={logo} alt={logo} className="innerLogo" /> */}
+                    <Row style={{ backgroundColor: 'black', color: 'white' }}>
+                        <Col md={{ size: 5, offset: 4 }}>
+                            <label>FREE US SHIPPING &amp; RETURN</label>
                         </Col>
-                        <Col md={{ size: 1, offset: 1}} className="about-us"> ABOUT </Col>
+                    </Row>
+                    <Row style={{ backgroundColor: 'white', color: "black" }}>
+                        <Col md={{ size: 1 }} className="header-item">MEN</Col>
+                        <Col md={{ size: 1 }} className="header-item">WOMEN</Col>
+                        <Col md={{ size: 7 }} className="header-item">
+                            <label className="align-circle">
+                                <i id="red-circle" class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                                <i id="green-circle" class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
+                            </label>
+                        </Col>
+                        <Col md={{ size: 1 }} className="header-item">
+                            ABOUT
+                        </Col>
+                        <Col md={{ size: 1 }} className="header-item">
+                            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        </Col>
                         <Col md={{ size: 1 }}>
                             <div style={{ textAlign: 'right' }}>
                                 <Button outline color="primary" id="ProfilePopover" onClick={this.toggle}>
@@ -82,11 +97,18 @@ export default class Header extends Component {
                                     </PopoverBody>
                                     <PopoverHeader>
                                         <Row>
-                                            <Col md={{ size: 4, offset: 7 }}><Button color="primary" onClick={this.signOut}>Logout</Button></Col>
+                                            <Col md={{ size: 4, offset: 7 }}>
+                                                <Button color="link" onClick={this.signOut}>Logout</Button>
+                                            </Col>
                                         </Row>
                                     </PopoverHeader>
                                 </Popover>
                             </div>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={{ size: 12 }}>
+                            <hr id="horzontal-line" />
                         </Col>
                     </Row>
                 </Container>

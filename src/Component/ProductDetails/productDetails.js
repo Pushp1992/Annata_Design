@@ -79,15 +79,15 @@ export default class ProductDetails extends Component {
      */
 
     getProductList = () => {
-        this.setState({loader: true})
+        this.setState({ loader: true })
         let productResponse = CatalougeService.getProductList()
         productResponse.then((response) => {
             let productData = response;
-            this.setState({loader: false})
+            this.setState({ loader: false })
             this.setState({ productList: productData })
         }, function (error) {
             CustomToastr.error(error);
-            this.setState({loader: false})
+            this.setState({ loader: false })
         })
     }
 
@@ -165,6 +165,7 @@ export default class ProductDetails extends Component {
         const productDesc = this.state.productDescription;
         const loaderValue = this.state.loader;
         const itemLoader = "Loading Items";
+        const productListLoader = this.state.productList;
 
         return (
             <Container fluid={true}>
@@ -172,14 +173,15 @@ export default class ProductDetails extends Component {
                     <Col md={{ size: 6 }}>
                         <Row noGutters={true}>
                             <Col md={{ size: 4 }}>
-                                <Select name="productName" id="productItem" bsSize="sm" value={this.state.productName} onChange={this.handleChange} dropdownMenuStyle={{ maxHeight: 500 }} optionLabelProp="children" optionFilterProp="text" backfill required>
+                                <Select name="productName" id="productItem" bsSize="sm" value={this.state.productName} onChange={this.handleChange} dropdownMenuStyle={{ maxHeight: 500 }} 
+                                        optionLabelProp="children" optionFilterProp="text" loading={ productListLoader.length === 0 ? true : false } backfill required>
                                     {
                                         this.state.productList.map(function (product, key) {
                                             return (
                                                 <Option key={key} text={product.name} value={product.id}>
-                                                   {loaderValue === "true" ? `${itemLoader}` : 
-                                                   `${product.name}`
-                                            }
+                                                    {loaderValue === "true" ? `${itemLoader}` :
+                                                        `${product.name}`
+                                                    }
                                                 </Option>
                                             )
                                         })
