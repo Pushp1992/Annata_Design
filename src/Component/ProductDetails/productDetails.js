@@ -320,12 +320,12 @@ export default class ProductDetails extends Component {
                                 You'll Also Like  {" "} <i class="fa fa-heart" aria-hidden="true"></i>
                             </label></CardHeader>
                             <Col md={{ size: 12 }}>
-                                <div style={{ "padding": "0 60px", "maxWidth": 1000, "margin": "0 auto" }}>
+                                <div style={{ "padding": "0 60px", "margin": "0 auto" }}>
                                     <ItemsCarousel
                                         placeholderItem={<div style={{ height: 300, background: '#EEE' }} />}
                                         enablePlaceholder={true}
                                         numberOfPlaceholderItems={6}
-                                        numberOfCars={6}
+                                        numberOfCards={5}
                                         gutter={12}
                                         slidesToScroll={2}
                                         chevronWidth={60}
@@ -340,6 +340,8 @@ export default class ProductDetails extends Component {
                                         {this.state.allImageList.map((data, key) =>
                                             <div key={key} style={{ height: 200 }}>
                                                 <img src={data.url} alt="image" style={{ width: "200px", height: "200px" }} />
+                                                <br/>
+                                                <label>{data.name}</label>
                                             </div>
                                         )}
                                     </ItemsCarousel>
