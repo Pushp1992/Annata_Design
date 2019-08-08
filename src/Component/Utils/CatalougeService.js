@@ -21,7 +21,7 @@ const CatalougeService = {
     },
 
     getProductImageList(productID) {
-        const encodedURI = window.encodeURI("/proxy/api/products/"+productID+"/image?access_token=" + access_token)
+        const encodedURI = window.encodeURI("/proxy/api/products/" + productID + "/image?access_token=" + access_token)
 
         return axios({
             "method": "GET",
@@ -37,7 +37,23 @@ const CatalougeService = {
     },
 
     getProductInformation(productID) {
-        const encodedURI = window.encodeURI("/proxy/api/products/"+productID+"?access_token=" + access_token)
+        const encodedURI = window.encodeURI("/proxy/api/products/" + productID + "?access_token=" + access_token)
+
+        return axios({
+            "method": "GET",
+            "url": encodedURI,
+            "headers": {
+                "Content-Type": "application/json",
+                "Server": "CATALOUGE"
+            }
+        })
+            .then(function (response) {
+                return response.data
+            })
+    },
+
+    getProductCount() {
+        const encodedURI = window.encodeURI("/proxy/api/products/count?access_token=" + access_token)
 
         return axios({
             "method": "GET",

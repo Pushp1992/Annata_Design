@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Container, Card, CardHeader, CardFooter, CardBody, Jumbotron, CardTitle, CardSubtitle, CardText, Button } from 'reactstrap';
+import { Row, Col, Container, Card, CardHeader, CardFooter, CardBody, Jumbotron, CardTitle, CardSubtitle, CardText, Button, Spinner } from 'reactstrap';
 import Select, { Option } from 'rc-select';
 import ImageGallery from 'react-image-gallery';
 import ItemsCarousel from 'react-items-carousel';
@@ -33,6 +33,7 @@ const defaultState = {
     productList: [],
     productDescription: {},
     allImageList: [],
+    singleProductImage: [],
     loader: false
 }
 
@@ -42,8 +43,40 @@ export default class ProductDetails extends Component {
         super(props)
 
         this.state = defaultState;
-        this.handleChange = this.handleChange.bind(this);
         this.addToCart = this.addToCart.bind(this);
+        this.onThumbnailClick = this.onThumbnailClick.bind(this);
+        this.getDefaultProductInfo = this.getDefaultProductInfo.bind(this);
+        this.onSlide = this.onSlide.bind(this);
+    }
+
+    /**
+     * When Image Thumbnail is clicked
+     */
+
+    onThumbnailClick = (event, index) => {
+        event.preventDefault()
+
+        let productID = index + 1;
+        this.getProductInformation(productID)
+    };
+
+    /**
+     * On Image Slide
+     */
+
+    onSlide(index) {
+        let productID = index + 1;
+        this.getProductInformation(productID)
+    }
+
+    /**
+     * Load Default Product Info
+     */
+    getDefaultProductInfo(event) {
+        event.preventDefault();
+
+        let productID = 6;
+        this.getProductInformation(productID)
     }
 
     /**
@@ -55,23 +88,61 @@ export default class ProductDetails extends Component {
     }
 
     /**
-     * Select product
+     * Get total Count of the Product
      */
 
-    handleChange(e, name) {
-        let productID;
-        let selectedProduct;
-        if (e && e.target) {
-            productID = e.target.value;
-            selectedProduct = name.props.text
+    productCount = () => {
+        let numberOfProduct = CatalougeService.getProductCount()
+        numberOfProduct.then((response) => {
+            if (response.count && response.count > 0) {
+                let count = response.count
 
-        } else {
-            productID = e;
-            selectedProduct = name.props.text
-        }
-        this.setState({ productName: selectedProduct })
-        this.productImageList(productID);
-        this.getProductInformation(productID);
+                for (let itemCount = 1; itemCount <= count; itemCount++) {
+                    this.productImageList(itemCount);
+                }
+            }
+        }, function (err) {
+            CustomToastr.error(err)
+        })
+    }
+
+    /**
+     *  Fetch Product Image by productId
+     */
+
+    productImageList(productID) {
+        let imageListresponse = CatalougeService.getProductImageList(productID);
+        imageListresponse.then(response => {
+
+            this.state.productImages.push(response[0])
+
+            let newProductImage = this.state.productImages.map(data => {
+                var result = Object.assign({}, data)
+                result.original = data.url;
+                result.thumbnail = data.url;
+                return result;
+            })
+
+            this.setState({ singleProductImage: newProductImage })
+        }, function (error) {
+            CustomToastr.error("Unable to fetch Product Images" || error)
+        })
+    }
+
+    /**
+    * Fetch Product Description by productId
+    */
+
+    getProductInformation = (productId) => {
+        this.setState({ loader: true })
+        let productResponse = CatalougeService.getProductInformation(productId)
+        productResponse.then((response) => {
+            let productInfo = response;
+            this.setState({ productDescription: productInfo, loader: false })
+        }, function (error) {
+            CustomToastr.error(error)
+            this.setState({ loader: false })
+        })
     }
 
     /**
@@ -92,20 +163,6 @@ export default class ProductDetails extends Component {
     }
 
     /**
-    * Fetch Product Description by productId
-    */
-
-    getProductInformation = (productId) => {
-        let productResponse = CatalougeService.getProductInformation(productId)
-        productResponse.then((response) => {
-            let productInfo = response;
-            this.setState({ productDescription: productInfo })
-        }, function (error) {
-            CustomToastr.error(error)
-        })
-    }
-
-    /**
     * Fetch all product image
     */
 
@@ -117,25 +174,6 @@ export default class ProductDetails extends Component {
             this.setState({ allImageList: imageCollection })
         }, function (error) {
             CustomToastr.error("Unable to fetch Image List" || error)
-        })
-    }
-
-    /**
-     *  Fetch Product Image by productId
-     */
-
-    productImageList(data) {
-        let imageListresponse = CatalougeService.getProductImageList(data);
-        imageListresponse.then(response => {
-            let newProductImage = response.map(data => {
-                var result = Object.assign({}, data)
-                result.original = data.url;
-                result.thumbnail = data.url;
-                return result;
-            })
-            this.setState({ productImages: newProductImage })
-        }, function (error) {
-            CustomToastr.error("Unable to fetch Product Images" || error)
         })
     }
 
@@ -154,13 +192,15 @@ export default class ProductDetails extends Component {
     }
 
     componentDidMount() {
+        this.productCount();
+
         this.getProductList();
         this.getImageList();
     }
 
     render() {
 
-        const images = this.state.productImages;
+        const images = this.state.singleProductImage;
         const demoImage = DemoImageCarousel;
         const productDesc = this.state.productDescription;
         const loaderValue = this.state.loader;
@@ -171,116 +211,105 @@ export default class ProductDetails extends Component {
             <Container fluid={true}>
                 <Row noGutters={true}>
                     <Col md={{ size: 6 }}>
+
                         <Row noGutters={true}>
-                            <Col md={{ size: 4 }}>
-                                <Select name="productName" id="productItem" bsSize="sm" value={this.state.productName} onChange={this.handleChange} dropdownMenuStyle={{ maxHeight: 500 }} 
-                                        optionLabelProp="children" optionFilterProp="text" loading={ productListLoader.length === 0 ? true : false } backfill required>
+                            <Col md={{ size: 8 }}>
+
+                                <Card outline id="productDescCard">
                                     {
-                                        this.state.productList.map(function (product, key) {
-                                            return (
-                                                <Option key={key} text={product.name} value={product.id}>
-                                                    {loaderValue === "true" ? `${itemLoader}` :
-                                                        `${product.name}`
-                                                    }
-                                                </Option>
-                                            )
-                                        })
+                                        (this.state.loader === true) ?
+                                        <div>
+                                            <Spinner type="grow" color="primary" />
+                                            <Spinner type="grow" color="secondary" />
+                                            <Spinner type="grow" color="success" />
+                                            <Spinner type="grow" color="danger" />
+                                            <Spinner type="grow" color="warning" />
+                                            <Spinner type="grow" color="info" />
+                                            <Spinner type="grow" color="light" />
+                                            <Spinner type="grow" color="dark" /> 
+                                            <br/>
+                                            <label> Fetching product info . . . . </label>                                           
+                                        </div>
+                                        
+                                            :
+
+                                            <div>
+                                                <Row noGutters={true}>
+                                                    <Col md={{ size: 6 }}>
+                                                        <label className="productNamePrice">{productDesc.name}</label>
+                                                    </Col>
+                                                    <Col md={{ size: 6 }}>
+                                                        <label className="productNamePrice">${productDesc.price}</label>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col md={{ size: 6 }}>
+                                                        <div>
+                                                            Color: {productDesc.color} {" "}
+                                                            <i class="fa fa-square-o" aria-hidden="true" style={{ backgroundColor: `${productDesc.color}`, outlineColor: "black" }}></i>
+                                                        </div>
+                                                    </Col>
+                                                    <Col md={{ size: 6 }} className="rating">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col md={{ size: 10, offset: 1 }}>
+                                                        <br />
+                                                        <label id="productDescription">{productDesc.description}</label>
+                                                    </Col>
+                                                </Row>
+                                            </div>
                                     }
-                                </Select>
+                                </Card>
+
+                                <br /> <br />
+
+                                <Card outline color="success">
+                                    <CardHeader>
+                                        <Button outline color="primary" size="lg" id="btnMen">
+                                            <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
+                                        <Button outline color="info" size="lg" id="btnWomen">
+                                            <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
+                                    </CardHeader>
+                                    <CardBody>
+                                        <CardText>
+                                            <div>
+                                                <div> <ColorRadioButton /></div>
+                                                <div> <SizeRadioButton /></div>
+                                            </div>
+                                        </CardText>
+                                    </CardBody>
+                                    <Button color="success" onClick={this.addToCart}>Add to BAG</Button>
+                                </Card>
+
                             </Col>
-                        </Row>
-                        <br /> <br />
-                        <Row noGutters={true}>
 
-                            {
-                                (images.length !== 0) ?
-                                    <Col md={{ size: 8 }}>
-
-                                        <Card outline id="productDescCard">
-                                            <Row noGutters={true}>
-                                                <Col md={{ size: 6 }}>
-                                                    <label className="productNamePrice">{productDesc.name}</label>
-                                                </Col>
-                                                <Col md={{ size: 6 }}>
-                                                    <label className="productNamePrice">${productDesc.price}</label>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col md={{ size: 6 }}>
-                                                    <div>
-                                                        Color: {productDesc.color} {" "}
-                                                        <i class="fa fa-square-o" aria-hidden="true" style={{ backgroundColor: `${productDesc.color}`, outlineColor: "black" }}></i>
-                                                    </div>
-                                                </Col>
-                                                <Col md={{ size: 6 }} className="rating">
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                                    <i class="fa fa-star-half-o" aria-hidden="true"></i>
-                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col md={{ size: 10, offset: 1 }}>
-                                                    <br />
-                                                    <label id="productDescription">{productDesc.description}</label>
-                                                </Col>
-                                            </Row>
-                                        </Card>
-
-                                        <br /> <br />
-
-                                        <Card outline color="success">
-                                            <CardHeader>
-                                                <Button outline color="primary" size="lg" id="btnMen">
-                                                    <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
-                                                <Button outline color="info" size="lg" id="btnWomen">
-                                                    <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
-                                            </CardHeader>
-                                            <CardBody>
-                                                <CardText>
-                                                    <div>
-                                                        <div> <ColorRadioButton /></div>
-                                                        <div> <SizeRadioButton /></div>
-                                                    </div>
-                                                </CardText>
-                                            </CardBody>
-                                            <Button color="success" onClick={this.addToCart}>Add to BAG</Button>
-                                        </Card>
-
-                                    </Col>
-                                    :
-                                    <Col md={{ size: 8 }}>
-                                        <Card outline color="warning">
-                                            <CardHeader></CardHeader>
-                                            <CardText>
-                                                <div>
-                                                    <Jumbotron fluid>
-                                                        <Container fluid>
-                                                            <h1 className="display-3">
-                                                                No Product Selected Yet {" "}
-                                                                <i class="fa fa-frown-o" aria-hidden="true"></i>
-                                                            </h1>
-                                                            <p className="lead">Please select Product from above select box to get it's Description and Price.</p>
-                                                        </Container>
-                                                    </Jumbotron>
-                                                </div>
-                                            </CardText>
-                                            <CardFooter></CardFooter>
-                                        </Card>
-
-                                    </Col>
-                            }
                         </Row>
 
                     </Col>
-                    <Col md={{ size: 4 }}>
-                        {
-                            (images.length !== 0) ?
-                                <ImageGallery items={images} />
-                                :
-                                <ImageGallery items={demoImage} />
-                        }
+                    <Col md={{ size: 4 }} id="imgCol">
+
+                        <Card id="imgCard">
+                            {
+                                (images && images.length !== 0) ?
+                                    <ImageGallery items={images} style={{ width: "350px", height: "500px" }} 
+                                        onThumbnailClick={this.onThumbnailClick}  onSlide={this.onSlide} onImageLoad={this.getDefaultProductInfo} />
+                                    :
+                                    <div>
+                                        <Spinner type="grow" color="success" style={{ width: '6rem', height: '6rem', alignContent: "center" }} />
+                                        <br/>
+                                        <h5> Loading Product Images . . . . .</h5>
+                                    </div>
+                            }
+                        </Card>
+
+                        {/* <ImageGallery items={demoImage} onThumbnailClick={this.onThumbnailClick} /> */}
+
                     </Col>
                 </Row>
 

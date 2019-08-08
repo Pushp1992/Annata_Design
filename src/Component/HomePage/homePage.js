@@ -16,7 +16,7 @@ export default class HomePage extends Component {
             <React.Fragment>
                 <Header />
 
-                <br/><br/><br/><br/>
+                <br/><br/>
 
                 <ProductDetails />
 

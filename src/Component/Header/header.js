@@ -64,7 +64,7 @@ export default class Header extends Component {
                             <label>FREE US SHIPPING &amp; RETURN</label>
                         </Col>
                     </Row>
-                    <Row style={{ backgroundColor: 'white', color: "black" }}>
+                    <Row style={{ backgroundColor: 'whitesmoke', color: "black" }}>
                         <Col md={{ size: 1 }} className="header-item">MEN</Col>
                         <Col md={{ size: 1 }} className="header-item">WOMEN</Col>
                         <Col md={{ size: 7 }} className="header-item">
@@ -106,11 +106,11 @@ export default class Header extends Component {
                             </div>
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col md={{ size: 12 }}>
                             <hr id="horzontal-line" />
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Container>
             </Router>
         )
