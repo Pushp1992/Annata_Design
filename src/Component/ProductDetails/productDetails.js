@@ -45,7 +45,6 @@ export default class ProductDetails extends Component {
         this.state = defaultState;
         this.addToCart = this.addToCart.bind(this);
         this.onThumbnailClick = this.onThumbnailClick.bind(this);
-        this.getDefaultProductInfo = this.getDefaultProductInfo.bind(this);
         this.onSlide = this.onSlide.bind(this);
     }
 
@@ -70,13 +69,11 @@ export default class ProductDetails extends Component {
     }
 
     /**
-     * Load Default Product Info
+     * Load Default Product information
      */
-    getDefaultProductInfo(event) {
-        event.preventDefault();
-
-        let productID = 6;
-        this.getProductInformation(productID)
+    defaultProductDetail() {
+        let productID = 8;
+         this.getProductInformation(productID);
     }
 
     /**
@@ -193,9 +190,9 @@ export default class ProductDetails extends Component {
 
     componentDidMount() {
         this.productCount();
-
         this.getProductList();
         this.getImageList();
+        this.defaultProductDetail();
     }
 
     render() {
@@ -298,7 +295,7 @@ export default class ProductDetails extends Component {
                             {
                                 (images && images.length !== 0) ?
                                     <ImageGallery items={images} style={{ width: "350px", height: "500px" }} 
-                                        onThumbnailClick={this.onThumbnailClick}  onSlide={this.onSlide} onImageLoad={this.getDefaultProductInfo} />
+                                        onThumbnailClick={this.onThumbnailClick}  onSlide={this.onSlide} />
                                     :
                                     <div>
                                         <Spinner type="grow" color="success" style={{ width: '6rem', height: '6rem', alignContent: "center" }} />
