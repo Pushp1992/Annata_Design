@@ -73,7 +73,7 @@ export default class ProductDetails extends Component {
      */
     defaultProductDetail() {
         let productID = 8;
-         this.getProductInformation(productID);
+        this.getProductInformation(productID);
     }
 
     /**
@@ -212,63 +212,55 @@ export default class ProductDetails extends Component {
                         <Row noGutters={true}>
                             <Col md={{ size: 8 }}>
 
-                                <Card outline id="productDescCard">
+                                <Card outline id="productDescCard" style={{border: "none"}}>
                                     {
                                         (this.state.loader === true) ?
-                                        <div>
-                                            <Spinner type="grow" color="primary" />
-                                            <Spinner type="grow" color="secondary" />
-                                            <Spinner type="grow" color="success" />
-                                            <Spinner type="grow" color="danger" />
-                                            <Spinner type="grow" color="warning" />
-                                            <Spinner type="grow" color="info" />
-                                            <Spinner type="grow" color="light" />
-                                            <Spinner type="grow" color="dark" /> 
-                                            <br/>
-                                            <label> Fetching product info . . . . </label>                                           
-                                        </div>
-                                        
+                                            <div>
+                                                <Spinner type="grow" color="primary" />
+                                                <Spinner type="grow" color="secondary" />
+                                                <Spinner type="grow" color="success" />
+                                                <Spinner type="grow" color="danger" />
+                                                <Spinner type="grow" color="warning" />
+                                                <Spinner type="grow" color="info" />
+                                                <Spinner type="grow" color="light" />
+                                                <Spinner type="grow" color="dark" />
+                                                <br />
+                                                <label> Fetching product info . . . . </label>
+                                            </div>
                                             :
-
                                             <div>
                                                 <Row noGutters={true}>
                                                     <Col md={{ size: 6 }}>
-                                                        <label className="productNamePrice">{productDesc.name}</label>
+                                                        <label id="productDescription">{productDesc.description}</label>
                                                     </Col>
                                                     <Col md={{ size: 6 }}>
-                                                        <label className="productNamePrice">${productDesc.price}</label>
+                                                        <label className="productPrice">{`$ ${productDesc.price} USD`}</label>
                                                     </Col>
                                                 </Row>
-                                                <Row>
-                                                    <Col md={{ size: 6 }}>
-                                                        <div>
-                                                            Color: {productDesc.color} {" "}
-                                                            <i class="fa fa-square-o" aria-hidden="true" style={{ backgroundColor: `${productDesc.color}`, outlineColor: "black" }}></i>
-                                                        </div>
+                                                <Row noGutters={true}>
+                                                    <Col md={{ size: 4 }}>
+                                                        <label className="productName">{productDesc.name}</label> {" "}
+                                                        <i class="fa fa-square-o" aria-hidden="true" style={{ backgroundColor: `${productDesc.color}`, outlineColor: "black" }}></i>
                                                     </Col>
-                                                    <Col md={{ size: 6 }} className="rating">
+                                                    <Col md={{ size: 4, offset: 2 }} className="rating">
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                         <i class="fa fa-star-half-o" aria-hidden="true"></i>
                                                         <i class="fa fa-star-o" aria-hidden="true"></i>
-                                                    </Col>
-                                                </Row>
-                                                <Row>
-                                                    <Col md={{ size: 10, offset: 1 }}>
-                                                        <br />
-                                                        <label id="productDescription">{productDesc.description}</label>
+                                                        {" "}
+                                                        <label>154 Reviews</label>
                                                     </Col>
                                                 </Row>
                                             </div>
                                     }
                                 </Card>
 
-                                <br /> <br />
+                              
 
                                 <Card outline color="success">
                                     <CardHeader>
-                                        <Button outline color="primary" size="lg" id="btnMen">
+                                        <Button outline color="success" size="lg" id="btnMen">
                                             <i class="fa fa-male fa-1x" aria-hidden="true"></i> MEN</Button>{' '} {' '}
                                         <Button outline color="info" size="lg" id="btnWomen">
                                             <i class="fa fa-female fa-1x" aria-hidden="true"></i> WOMEN</Button>{' '}
@@ -294,12 +286,12 @@ export default class ProductDetails extends Component {
                         <Card id="imgCard">
                             {
                                 (images && images.length !== 0) ?
-                                    <ImageGallery items={images} style={{ width: "350px", height: "500px" }} 
-                                        onThumbnailClick={this.onThumbnailClick}  onSlide={this.onSlide} />
+                                    <ImageGallery items={images} style={{ width: "350px", height: "500px" }}
+                                        onThumbnailClick={this.onThumbnailClick} onSlide={this.onSlide} />
                                     :
                                     <div>
                                         <Spinner type="grow" color="success" style={{ width: '6rem', height: '6rem', alignContent: "center" }} />
-                                        <br/>
+                                        <br />
                                         <h5> Loading Product Images . . . . .</h5>
                                     </div>
                             }
@@ -316,16 +308,18 @@ export default class ProductDetails extends Component {
                 <Container fluid={true}>
                     <Row>
                         <Card id="recommend-section-style">
-                            <CardHeader> <label id="recHeader">
-                                You'll Also Like  {" "} <i class="fa fa-heart" aria-hidden="true"></i>
-                            </label></CardHeader>
+                            <CardHeader>
+                                <label id="recHeader">
+                                    You'll Also Like  {" "} <i class="fa fa-heart" aria-hidden="true" style={{ color: "rgba(121, 52, 106, 0.74)" }}></i>
+                                </label>
+                            </CardHeader>
                             <Col md={{ size: 12 }}>
                                 <div style={{ "padding": "0 60px", "margin": "0 auto" }}>
                                     <ItemsCarousel
                                         placeholderItem={<div style={{ height: 300, background: '#EEE' }} />}
                                         enablePlaceholder={true}
                                         numberOfPlaceholderItems={6}
-                                        numberOfCards={5}
+                                        numberOfCards={6}
                                         gutter={12}
                                         slidesToScroll={2}
                                         chevronWidth={60}
@@ -334,14 +328,13 @@ export default class ProductDetails extends Component {
                                         firstAndLastGutter={false}
                                         activeItemIndex={this.state.activeItemIndex}
                                         requestToChangeActive={value => this.setState({ activeItemIndex: value })}
-                                        rightChevron={<i class="fa fa-hand-o-right fa-2x" aria-hidden="true"></i>}
-                                        leftChevron={<i class="fa fa-hand-o-left fa-2x" aria-hidden="true"></i>}
+                                        rightChevron={<i class="fa fa-arrow-circle-o-right fa-2x" aria-hidden="true"></i>}
+                                        leftChevron={<i class="fa fa-arrow-circle-o-left fa-2x" aria-hidden="true"></i>}
                                     >
                                         {this.state.allImageList.map((data, key) =>
                                             <div key={key} style={{ height: 200 }}>
                                                 <img src={data.url} alt="image" style={{ width: "200px", height: "200px" }} />
-                                                <br/>
-                                                <label>{data.name}</label>
+                                                <br />
                                             </div>
                                         )}
                                     </ItemsCarousel>
