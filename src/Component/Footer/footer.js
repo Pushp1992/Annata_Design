@@ -51,7 +51,7 @@ export default class Footer extends Component {
                             <Col md={{ size: 2 }}>Find Near You</Col>
                             <Col md={{ size: 2 }}>
                                 <div>
-                                    <Input type="email" name="email" placeholder="Enter email" />
+                                    <Input type="email" name="email" bsSize="sm" placeholder="Enter email" />
                                     {/* <Button type="submit" outline color="success" value="JOIN US" onclick={this.submit}> JOIN US </Button> */}
                                 </div>
                             </Col>
@@ -75,7 +75,7 @@ export default class Footer extends Component {
                             <Col md={{ size: 2 }}></Col>
                             <Col md={{ size: 2 }}></Col>
                             <Col md={{ size: 2 }}>
-                                <Input type="search" name="search" placeholder="find your sneakers here" />
+                                <Input type="search" name="search" bsSize="sm" placeholder="find your sneakers here" />
                                 {/* <Button type="submit" outline color="success" value="search" onclick={this.submit}>
                                     <i className="fa fa-search fa-1x" aria-hidden="true"></i>
                                 </Button> */}
