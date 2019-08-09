@@ -1,7 +1,7 @@
 .payment-Style {
-    font-weight: bold;
+    font-weight: 400;
     padding: 10px;
-    font-size: 15px;
+    font-size: 20px;
     background-color: rgba(240, 233, 233, 0.747);
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }

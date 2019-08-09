@@ -12,16 +12,22 @@
 .rating > i {
     color: green;
 }
-.productNamePrice {
-    font-family: monospace;
-    font-size: 25px;
-    color: black;
+.productName {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: rgba(41, 38, 38, 0.801);
+}
+.productPrice {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 20px;
+    color: rgba(97, 90, 90, 0.788);
 }
 #productDescription {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 900;
-    font-family: fantasy;
-    color: peru;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(34, 31, 31);
 }
 #productDescCard {
     background-color: rgba(255, 255, 255, 0.151);
@@ -33,8 +39,12 @@
 }
 
 #recHeader {
-    font-weight: 600;
+    font-weight: 400;
     font-size: 2em;
     color: rgba(0, 0, 0, 0.74);
-    font-family: cursive;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.image-gallery-slide img {
+    height: 500px;
 }
