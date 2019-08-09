@@ -66,7 +66,7 @@ export default class Header extends Component {
                     </Row>
                     <Row style={{ backgroundColor: 'whitesmoke', color: "black" }}>
                         <Col md={{ size: 1 }} className="header-item">MEN</Col>
-                        <Col md={{ size: 1 }} className="header-item">WOMEN</Col>
+                        <Col md={{ size: 1 }} className="header-item" style={{border: "solid 2px white"}}>WOMEN</Col>
                         <Col md={{ size: 7 }} className="header-item">
                             <label className="align-circle">
                                 <i id="red-circle" class="fa fa-circle-thin fa-3x" aria-hidden="true"></i>
