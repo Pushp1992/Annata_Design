@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Container, Card, CardHeader, CardBody, CardText, Button, Spinner } from 'reactstrap';
+import { Row, Col, Container, Card, CardHeader, CardBody, CardText, Button, Spinner, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ImageGallery from 'react-image-gallery';
 import ItemsCarousel from 'react-items-carousel';
 // Custom Import
@@ -30,7 +30,10 @@ const defaultState = {
     productDescription: {},
     allImageList: [],
     singleProductImage: [],
-    loader: false
+    loader: false,
+    modal: false,
+    recommendImgUrl: '',
+    recommendImgProductId: ''
 }
 
 export default class ProductDetails extends Component {
@@ -42,7 +45,24 @@ export default class ProductDetails extends Component {
         this.addToCart = this.addToCart.bind(this);
         this.onThumbnailClick = this.onThumbnailClick.bind(this);
         this.onSlide = this.onSlide.bind(this);
+        this.handleDemoClick = this.handleDemoClick.bind(this);
+        this.toggle = this.toggle.bind(this);
     }
+
+    handleDemoClick(event, data) {
+        this.setState({recommendImgUrl: data.url, recommendImgProductId: data.productId})
+        this.toggle()
+        
+    }
+
+    /**
+     * Toggling Modal Window
+     */
+    toggle() {
+        this.setState(prevState => ({
+          modal: !prevState.modal
+        }));
+      }
 
     /**
      * When Image Thumbnail is clicked
@@ -239,7 +259,7 @@ export default class ProductDetails extends Component {
                                             </div>
                                     }
                                 </Card>
-                                <br/>
+                                <br />
 
                                 <Card outline color="success">
                                     <CardHeader>
@@ -268,7 +288,7 @@ export default class ProductDetails extends Component {
                         <Card id="imgCard">
                             {
                                 (images && images.length !== 0) ?
-                                    <ImageGallery items={images} 
+                                    <ImageGallery items={images}
                                         onThumbnailClick={this.onThumbnailClick} onSlide={this.onSlide} />
                                     :
                                     <div>
@@ -315,7 +335,8 @@ export default class ProductDetails extends Component {
                                     >
                                         {this.state.allImageList.map((data, key) =>
                                             <div key={key} style={{ height: 200 }}>
-                                                <img src={data.url} alt="image" style={{ width: "200px", height: "200px" }} />
+                                                <img src={data.url} alt="image" style={{ width: "200px", height: "200px" }} id="recommendProductImageCar" 
+                                                    onClick={() => this.handleDemoClick(this, data)} />
                                                 <br />
                                             </div>
                                         )}
@@ -325,6 +346,18 @@ export default class ProductDetails extends Component {
                         </Card>
                     </Row>
                 </Container>
+
+                {/**************** Modal Window ***************/}
+                <Modal isOpen={this.state.modal} modalTransition={{ timeout: 700 }} backdropTransition={{ timeout: 1300 }}
+                    toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>{`ProductID: ${this.state.recommendImgProductId}`}</ModalHeader>
+                    <ModalBody>
+                        <img src={this.state.recommendImgUrl} alt="productImage" id="recommendProductImage" />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="secondary" onClick={this.toggle}>close</Button>
+                    </ModalFooter>
+                </Modal>
 
             </Container>
         )

@@ -48,3 +48,11 @@
 .image-gallery-slide img {
     height: 500px;
 }
+
+#recommendProductImage {
+    width: 450px;
+    height: 400px
+}
+#recommendProductImageCar:hover{
+    cursor: pointer;
+}
