@@ -2,18 +2,14 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Container, Card, CardHeader, CardFooter, CardBody, Jumbotron, CardTitle, CardSubtitle, CardText, Button, Spinner } from 'reactstrap';
-import Select, { Option } from 'rc-select';
+import { Row, Col, Container, Card, CardHeader, CardBody, CardText, Button, Spinner } from 'reactstrap';
 import ImageGallery from 'react-image-gallery';
 import ItemsCarousel from 'react-items-carousel';
-import range from 'lodash/range';
-
 // Custom Import
 import CustomToastr from '../Utils/customToastr';
 import CatalougeService from '../Utils/CatalougeService';
 import DemoImageCarousel from '../Utils/demoImageCarousel';
 import { ColorRadioButton, SizeRadioButton } from '../Utils/radioButtonGroup';
-
 // Custom Style
 import '../ProductDetails/productDetails.css';
 
@@ -51,7 +47,6 @@ export default class ProductDetails extends Component {
     /**
      * When Image Thumbnail is clicked
      */
-
     onThumbnailClick = (event, index) => {
         event.preventDefault()
 
@@ -62,7 +57,6 @@ export default class ProductDetails extends Component {
     /**
      * On Image Slide
      */
-
     onSlide(index) {
         let productID = index + 1;
         this.getProductInformation(productID)
@@ -87,7 +81,6 @@ export default class ProductDetails extends Component {
     /**
      * Get total Count of the Product
      */
-
     productCount = () => {
         let numberOfProduct = CatalougeService.getProductCount()
         numberOfProduct.then((response) => {
@@ -106,7 +99,6 @@ export default class ProductDetails extends Component {
     /**
      *  Fetch Product Image by productId
      */
-
     productImageList(productID) {
         let imageListresponse = CatalougeService.getProductImageList(productID);
         imageListresponse.then(response => {
@@ -129,7 +121,6 @@ export default class ProductDetails extends Component {
     /**
     * Fetch Product Description by productId
     */
-
     getProductInformation = (productId) => {
         this.setState({ loader: true })
         let productResponse = CatalougeService.getProductInformation(productId)
@@ -145,7 +136,6 @@ export default class ProductDetails extends Component {
     /**
      * Fetch all the products
      */
-
     getProductList = () => {
         this.setState({ loader: true })
         let productResponse = CatalougeService.getProductList()
@@ -162,7 +152,6 @@ export default class ProductDetails extends Component {
     /**
     * Fetch all product image
     */
-
     getImageList = () => {
         let imageList = CatalougeService.getImageList()
         imageList.then((response) => {
@@ -177,7 +166,6 @@ export default class ProductDetails extends Component {
     /**
     * Get Image Count
     */
-
     getImageCount = () => {
         let imageCount = CatalougeService.getImageCount()
         imageCount.then((response) => {
@@ -198,11 +186,7 @@ export default class ProductDetails extends Component {
     render() {
 
         const images = this.state.singleProductImage;
-        const demoImage = DemoImageCarousel;
         const productDesc = this.state.productDescription;
-        const loaderValue = this.state.loader;
-        const itemLoader = "Loading Items";
-        const productListLoader = this.state.productList;
 
         return (
             <Container fluid={true}>
@@ -212,7 +196,7 @@ export default class ProductDetails extends Component {
                         <Row noGutters={true}>
                             <Col md={{ size: 8 }}>
 
-                                <Card outline id="productDescCard" style={{border: "none"}}>
+                                <Card outline id="productDescCard" style={{ border: "none" }}>
                                     {
                                         (this.state.loader === true) ?
                                             <div>
@@ -255,8 +239,7 @@ export default class ProductDetails extends Component {
                                             </div>
                                     }
                                 </Card>
-
-                              
+                                <br/>
 
                                 <Card outline color="success">
                                     <CardHeader>
@@ -277,7 +260,6 @@ export default class ProductDetails extends Component {
                                 </Card>
 
                             </Col>
-
                         </Row>
 
                     </Col>
@@ -286,7 +268,7 @@ export default class ProductDetails extends Component {
                         <Card id="imgCard">
                             {
                                 (images && images.length !== 0) ?
-                                    <ImageGallery items={images} style={{ width: "350px", height: "500px" }}
+                                    <ImageGallery items={images} 
                                         onThumbnailClick={this.onThumbnailClick} onSlide={this.onSlide} />
                                     :
                                     <div>

@@ -52,7 +52,7 @@ export default class Footer extends Component {
                             <Col md={{ size: 2 }}>
                                 <div>
                                     <Input type="email" name="email" placeholder="Enter email" />
-                                    <Button type="submit" outline color="success" value="JOIN US" onclick={this.submit}> JOIN US </Button>
+                                    {/* <Button type="submit" outline color="success" value="JOIN US" onclick={this.submit}> JOIN US </Button> */}
                                 </div>
                             </Col>
                         </Row>
@@ -64,21 +64,21 @@ export default class Footer extends Component {
                             <Col md={{ size: 2 }}>Register</Col>
                         </Row>
                         <Row>
-                            <Col md={{ size: 2 }}>CATIBA LOW</Col>
-                            <Col md={{ size: 2 }}>CATIBA LOW</Col>
+                            <Col md={{ size: 2 }}>CABA LOW</Col>
+                            <Col md={{ size: 2 }}>CABA LOW</Col>
                             <Col md={{ size: 2 }}>Live Chat</Col>
                             <Col md={{ size: 2 }}>Future</Col>
                         </Row>
                         <Row>
-                            <Col md={{ size: 2 }}>CATIBA High</Col>
-                            <Col md={{ size: 2 }}>CATIBA High</Col>
+                            <Col md={{ size: 2 }}>CABA High</Col>
+                            <Col md={{ size: 2 }}>CABA High</Col>
                             <Col md={{ size: 2 }}></Col>
                             <Col md={{ size: 2 }}></Col>
                             <Col md={{ size: 2 }}>
                                 <Input type="search" name="search" placeholder="find your sneakers here" />
-                                <Button type="submit" outline color="success" value="search" onclick={this.submit}>
+                                {/* <Button type="submit" outline color="success" value="search" onclick={this.submit}>
                                     <i className="fa fa-search fa-1x" aria-hidden="true"></i>
-                                </Button>
+                                </Button> */}
                             </Col>
                             <Col md={{ size: 2 }}>
                                 <Row>

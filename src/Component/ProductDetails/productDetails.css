@@ -44,3 +44,7 @@
     color: rgba(0, 0, 0, 0.74);
     font-family: 'Times New Roman', Times, serif;
 }
+
+.image-gallery-slide img {
+    height: 500px;
+}
