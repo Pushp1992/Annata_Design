@@ -5,7 +5,7 @@
   "author": "Pushp Singh (pushp.ranjansingh@gmail.com)",
   "dependencies": {
     "@material-ui/core": "^4.3.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "bootstrap": "^4.3.1",
     "express": "^4.17.1",
     "express-http-proxy": "^1.5.1",
